@@ -1,10 +1,11 @@
 window.onload = function () {
     // Get elements from the page
     let lookupBtn = document.getElementById("lookup");
+    let lookupCitiesBtn = document.getElementById("lookup-cities");
     let countryInput = document.getElementById("country");
     let resultDiv = document.getElementById("result");
 
-    // Add click listener
+    // Country Lookup
     lookupBtn.addEventListener("click", function () {
         let country = countryInput.value.trim();
 
@@ -22,4 +23,21 @@ window.onload = function () {
                 console.error(error);
             });
     });
+
+    //City Lookup
+    lookupCitiesBtn.addEventListener("click", function () {
+        let country = countryInput.value.trim();
+        let url = "world.php?country=" + encodeURIComponent(country) + "&lookup=cities";
+
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                resultDiv.innerHTML = data;
+            })
+            .catch(error => {
+                resultDiv.innerHTML = "<p style='color:red;'>Error fetching cities</p>";
+                console.error(error);
+            });
+    });
+
 };
